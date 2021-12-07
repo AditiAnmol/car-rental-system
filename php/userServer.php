@@ -87,14 +87,14 @@ if (isset($_POST['car_add'])) {
   if (empty($carRate)) { array_push($errors, "Car Rate is required"); }
 
   // first check the database to make sure 
-  // a user does not already exist with the same email
+  // a car does not already exist with the same name
   $user_check_query = "SELECT * FROM cars WHERE car_name='$carName' LIMIT 1";
   $result = mysqli_query($db, $user_check_query);
   $car = mysqli_fetch_assoc($result);
   
-  if ($car) { // if user exists
+  if ($car) { // if car already exists
     if ($car['car_name'] === $carName) {
-      array_push($errors, "car name already exists");
+      array_push($errors, "Car name already exists");
     }
   }
 
@@ -132,12 +132,29 @@ if (isset($_POST['remove_car'])) {
   $carName = mysqli_real_escape_string($db, $_POST['carName']);
   
   if (empty($carName)) { array_push($errors, "Car Name is required"); }
-  
-	$query = "DELETE from cars where car_name = '$carName'";
 
-  mysqli_query($db, $query);
-  $_SESSION['success'] = "Car has been removed";
-  header('location: adminHome.php');
+  // first check the database to make sure 
+  // a car already exist with the same name
+  $user_check_query = "SELECT * FROM cars WHERE car_name='$carName' LIMIT 1";
+  $result = mysqli_query($db, $user_check_query);
+  $car = mysqli_fetch_assoc($result);
+  
+  if ($car == null) { // if car already exists
+      array_push($errors, "Car doesn't exists");
+  }
+
+  // Finally, register user if there are no errors in the form
+  if (count($errors) == 0) {
+  //encrypt the password before saving in the database
+
+    $query = "DELETE from cars where car_name = '$carName'";
+
+    mysqli_query($db, $query);
+    $_SESSION['success'] = "Car has been removed";
+    header('location: adminHome.php');
+
+  }
+  
 }
 
 
