@@ -160,14 +160,19 @@ if (isset($_POST['remove_car'])) {
 
 //Confirmation Page
 if (isset($_POST['confirm_rent'])) {
-	$return_date = mysqli_real_escape_string($db, $_POST['return_date']);
-	$current_date = date_create(date("Y/m/d"));
-	$returnDate = date_create($return_date);
-	$diff = date_diff($current_date, $returnDate);
-	$_SESSION['number_of_days'] = intval($diff->format("%d")) + 1;
-	$_SESSION['total_amount'] = $_SESSION['number_of_days'] * $_SESSION['car_rate'];
-	$_SESSION['return_date'] = date("Y/m/d",strtotime($return_date));
-	header('location: ../confirmation.php');
+  $return_date = mysqli_real_escape_string($db, $_POST['return_date']);
+  if (empty($return_date)) { array_push($errors, "Return date is required"); }
+
+  if (count($errors) == 0) {
+    
+	  $current_date = date_create(date("Y/m/d"));
+	  $returnDate = date_create($return_date);
+	  $diff = date_diff($current_date, $returnDate);
+	  $_SESSION['number_of_days'] = intval($diff->format("%d")) + 1;
+	  $_SESSION['total_amount'] = $_SESSION['number_of_days'] * $_SESSION['car_rate'];
+	  $_SESSION['return_date'] = date("Y/m/d",strtotime($return_date));
+	  header('location: ../confirmation.php');
+  }
 }
 
 if (isset($_POST['confirm'])) {
