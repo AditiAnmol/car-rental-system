@@ -18,13 +18,9 @@ It serves various use-cases:
 * Feasible than owning a car and maintaining it. 
 # _Stories_:
 * As an Admin, I should be able to login.
-* As an Admin, I should be able to change my password.
 * As an Admin, I should be able to add or remove car rentals to the system.
 * As a Customer, I should be able to login.
-* As a Customer, I should be able to change my password.
 * As a Customer, I should be able to view the car rental catalog on my dashboard.
 * As a Customer, I should be able to rent a car.
 * As a Customer, when I rent a car, I should be able to see the car rental quantity update after a successful rental. 
 * As an Admin, when I try to add a car with a name that is already existing in the system, I should see an error message. 
-
-
